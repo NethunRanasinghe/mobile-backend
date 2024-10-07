@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./db"); // Adjust path as necessary
 const userRoutes = require("./routes/userRoutes"); // Import user routes
+const clubRoutes = require("./routes/clubdetails");
+const councilRoutes = require("./routes/councildetails");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,9 +17,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/users", userRoutes); // Use user routes
+// Use club routes
+app.use("/v1/api/club", clubRoutes);
+app.use("/v1/api/district", councilRoutes);
 
 // Test database connection
-sequelize.authenticate()
+sequelize
+  .authenticate()
   .then(() => {
     console.log("Database connected successfully.");
   })
